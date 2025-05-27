@@ -1,0 +1,32 @@
+name: Update API Documentation
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [api-docs-updated]
+  schedule:
+    - cron: "0 */6 * * *" # Check every 6 hours
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download API docs from common-voice-api
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: api-docsgen.yaml
+          name: api-docs
+          repo: common-voice/common-voice-api
+          path: docs/
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update API documentation from common-voice-api"
+          file_pattern: "docs/openapi-docs.html"
