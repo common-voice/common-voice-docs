@@ -10,1282 +10,1282 @@
     <div id="app"></div>
     <script id="api-reference" type="application/yaml">
 
-      openapi: 3.1.0
-      info:
-        title: Common Voice API
-        version: 0.1.0
-        description: >-
-          The Common Voice API allows you to add and retrieve data from the Common Voice dataset.
+openapi: 3.1.0
+info:
+  title: Common Voice API
+  version: 0.1.0
+  description: >-
+    The Common Voice API allows you to add and retrieve data from the Common Voice dataset.
 
+tags:
+  - name: Auth
+    description: Authenticate to the API.
+  - name: User
+    description: Work with users.
+  - name: Audio
+    description: Work with audio information and files.
+  - name: Text
+    description: Work with text and sentences.
+  - name: General
+    description: Operations that are part of the general operation of the API.
+
+paths:
+  '/auth/token':
+    post:
+      summary: Get an access token to use with this API
+      description: >-
+        Exchange your client ID and secret for an access token.
+        The access token is in JWT format; when the token expires, revisit this endpoint to get a new token.
+        Learn more about the [OAuth Client Credentials Flow](https://auth0.com/docs/flows/client-credentials-flow).
+      operationId: createAccessToken
+      security: [] # No security required for this endpoint
       tags:
-        - name: Auth
-          description: Authenticate to the API.
-        - name: User
-          description: Work with users.
-        - name: Audio
-          description: Work with audio information and files.
-        - name: Text
-          description: Work with text and sentences.
-        - name: General
-          description: Operations that are part of the general operation of the API.
-
-      paths:
-        '/auth/token':
-          post:
-            summary: Get an access token to use with this API
-            description: >-
-              Exchange your client ID and secret for an access token.
-              The access token is in JWT format; when the token expires, revisit this endpoint to get a new token.
-              Learn more about the [OAuth Client Credentials Flow](https://auth0.com/docs/flows/client-credentials-flow).
-            operationId: createAccessToken
-            security: [] # No security required for this endpoint
-            tags:
-              - Auth
-            requestBody:
-              content:
-                application/json:
-                  schema:
-                    type: object
-                    properties:
-                      clientId:
-                        type: string
-                        description: The client ID to use. Sign up for a client ID and secret on the Common Voice web dashboard.
-                        example: cv_f48e49c0
-                      clientSecret:
-                        type: string
-                        description: The client secret for this client ID. Sign up for a client ID and secret on the Common Voice web dashboard.
-                        example: 853b5b42a41bf48e49c0
-            responses:
-              '200':
-                description: Access token created successfully
-                content:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        token:
-                          type: string
-                          description: The access token to use with the API
-                          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-              '400':
-                description: Invalid request
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
-                    examples:
-                      default:
-                        value:
-                          title: Invalid request
-                          status: 400
-                          detail: The request has incorrect or missing data. Please check your request and try again.
-
-              '401':
-                description: Unauthorized
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
-                    examples:
-                      default:
-                        value:
-                          title: Unauthorized
-                          status: 401
-                          detail: The client ID or secret do not match. Please check your credentials and try again.
-
-        '/auth/clients':
-          get:
-            summary: Fetch API creds
-            description: Returns a list of API clients for a user. These records do not include the `client_secret` values that are only available at create time.
-            operationId: getApiClients
-            tags:
-              - Auth
-            security: []
-            parameters:
-              - name: userId
-                in: query
-                required: true
-                schema:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientId:
                   type: string
-                  description: The Common Voice website user that the client is associated with.
-            responses:
-              '200':
-                description: Success. Returned when the request was successful, even if the list of clients is empty.
-                content:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        apiCreds:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              clientId:
-                                type: string
-                                description: Field to use when calling the API.
-                                example: be91f0
-                              userId:
-                                type: string
-                                description: The Common Voice website user that the client is associated with.
-                                example: 23bcc4458797123a
-                              description:
-                                type: string
-                                description: The description supplied at create time to accompany the credentials.
-                                example: Jane's test credentials
-              '400':
-                description: Invalid request
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
-                    examples:
-                      default:
-                        value:
-                          title: Invalid request
-                          status: 400
-                          detail: The request has incorrect or missing data. Please check your request and try again.
+                  description: The client ID to use. Sign up for a client ID and secret on the Common Voice web dashboard.
+                  example: cv_f48e49c0
+                clientSecret:
+                  type: string
+                  description: The client secret for this client ID. Sign up for a client ID and secret on the Common Voice web dashboard.
+                  example: 853b5b42a41bf48e49c0
+      responses:
+        '200':
+          description: Access token created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: The access token to use with the API
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        '400':
+          description: Invalid request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              examples:
+                default:
+                  value:
+                    title: Invalid request
+                    status: 400
+                    detail: The request has incorrect or missing data. Please check your request and try again.
 
-          post:
-            summary: Create API client
-            description: Create a new set of API credentials, consisting of a clientId and clientSecret, for a user.
-            operationId: getApiCreds
-            security: []
-            tags:
-              - Auth
-            requestBody:
-              content:
-                application/json:
-                  schema:
-                    type: object
-                    properties:
-                      userId:
-                        type: string
-                        description: The Common Voice website user that the client is associated with.
-                        example: 23bcc4458797123a
-                      description:
-                        type: string
-                        description: A user-supplied string to label this credential with.
-            responses:
-              '201':
-                description: Success. Returned when the request was successful, even if the list of clients is empty.
-                content:
-                  application/json:
-                    schema:
+        '401':
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              examples:
+                default:
+                  value:
+                    title: Unauthorized
+                    status: 401
+                    detail: The client ID or secret do not match. Please check your credentials and try again.
+
+  '/auth/clients':
+    get:
+      summary: Fetch API creds
+      description: Returns a list of API clients for a user. These records do not include the `client_secret` values that are only available at create time.
+      operationId: getApiClients
+      tags:
+        - Auth
+      security: []
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: string
+            description: The Common Voice website user that the client is associated with.
+      responses:
+        '200':
+          description: Success. Returned when the request was successful, even if the list of clients is empty.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiCreds:
+                    type: array
+                    items:
                       type: object
                       properties:
                         clientId:
                           type: string
                           description: Field to use when calling the API.
                           example: be91f0
-                        clientSecret:
-                          type: string
-                          description: Field to use when calling the API. This value cannot be retrieved again in future.
-                          example: 23c2461c7b0b
                         userId:
                           type: string
                           description: The Common Voice website user that the client is associated with.
                           example: 23bcc4458797123a
                         description:
                           type: string
-                          description: The description supplied in the request.
+                          description: The description supplied at create time to accompany the credentials.
                           example: Jane's test credentials
-              '400':
-                description: Invalid request
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
-                    examples:
-                      default:
-                        value:
-                          title: Invalid request
-                          status: 400
-                          detail: The request has incorrect or missing data. Please check your request and try again.
-
-        '/auth/clients/{clientId}':
-          parameters:
-            - name: clientId
-              in: path
-              required: true
+        '400':
+          description: Invalid request
+          content:
+            application/problem+json:
               schema:
-                type: string
-                description: The clientId to fetch
-          get:
-            summary: Fetch an API client
-            description: Returns an API credentials set. Does not include the `client_secret` value that is only available at create time.
-            operationId: getOneApiCred
-            tags:
-              - Auth
-            security: []
-            responses:
-              '200':
-                description: Success.
-                content:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        apiCreds:
-                          type: object
-                          properties:
-                            clientId:
-                              type: string
-                              description: Field to use when calling the API.
-                              example: be91f0
-                            userId:
-                              type: string
-                              description: The Common Voice website user the creds belong to.
-                              example: 23bcc4458797123a
-                            description:
-                              type: string
-                              description: The description supplied at create time to accompany the credentials.
-                              example: Jane's test credentials
-              '400':
-                description: Invalid request
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
-                    examples:
-                      default:
-                        value:
-                          title: Invalid request
-                          status: 400
-                          detail: The request has incorrect or missing data. Please check your request and try again.
+                $ref: '#/components/schemas/ProblemDetails'
+              examples:
+                default:
+                  value:
+                    title: Invalid request
+                    status: 400
+                    detail: The request has incorrect or missing data. Please check your request and try again.
 
-          delete:
-            summary: Delete an API client
-            description: Deletes a set of API credentials, these details cannot be used to get an access token after they have been deleted.
-            operationId: deleteApiCred
-            tags:
-              - Auth
-            security: []
-            responses:
-              '204':
-                description: No content.
-              '400':
-                description: Invalid request
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
-                    examples:
-                      default:
-                        value:
-                          title: Invalid request
-                          status: 400
-                          detail: The request has incorrect or missing data. Please check your request and try again.
+    post:
+      summary: Create API client
+      description: Create a new set of API credentials, consisting of a clientId and clientSecret, for a user.
+      operationId: getApiCreds
+      security: []
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: The Common Voice website user that the client is associated with.
+                  example: 23bcc4458797123a
+                description:
+                  type: string
+                  description: A user-supplied string to label this credential with.
+      responses:
+        '201':
+          description: Success. Returned when the request was successful, even if the list of clients is empty.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  clientId:
+                    type: string
+                    description: Field to use when calling the API.
+                    example: be91f0
+                  clientSecret:
+                    type: string
+                    description: Field to use when calling the API. This value cannot be retrieved again in future.
+                    example: 23c2461c7b0b
+                  userId:
+                    type: string
+                    description: The Common Voice website user that the client is associated with.
+                    example: 23bcc4458797123a
+                  description:
+                    type: string
+                    description: The description supplied in the request.
+                    example: Jane's test credentials
+        '400':
+          description: Invalid request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              examples:
+                default:
+                  value:
+                    title: Invalid request
+                    status: 400
+                    detail: The request has incorrect or missing data. Please check your request and try again.
 
-        '/auth/users':
-          post:
-            summary: Create a new user
-            description: Create a new user which will return a user ID that can be used with other operations.
-            operationId: createUser
-            tags:
-              - User
-            security: []
-            requestBody:
-              content:
-                application/json:
-                  schema:
+  '/auth/clients/{clientId}':
+    parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The clientId to fetch
+    get:
+      summary: Fetch an API client
+      description: Returns an API credentials set. Does not include the `client_secret` value that is only available at create time.
+      operationId: getOneApiCred
+      tags:
+        - Auth
+      security: []
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiCreds:
                     type: object
                     properties:
+                      clientId:
+                        type: string
+                        description: Field to use when calling the API.
+                        example: be91f0
+                      userId:
+                        type: string
+                        description: The Common Voice website user the creds belong to.
+                        example: 23bcc4458797123a
+                      description:
+                        type: string
+                        description: The description supplied at create time to accompany the credentials.
+                        example: Jane's test credentials
+        '400':
+          description: Invalid request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              examples:
+                default:
+                  value:
+                    title: Invalid request
+                    status: 400
+                    detail: The request has incorrect or missing data. Please check your request and try again.
+
+    delete:
+      summary: Delete an API client
+      description: Deletes a set of API credentials, these details cannot be used to get an access token after they have been deleted.
+      operationId: deleteApiCred
+      tags:
+        - Auth
+      security: []
+      responses:
+        '204':
+          description: No content.
+        '400':
+          description: Invalid request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              examples:
+                default:
+                  value:
+                    title: Invalid request
+                    status: 400
+                    detail: The request has incorrect or missing data. Please check your request and try again.
+
+  '/auth/users':
+    post:
+      summary: Create a new user
+      description: Create a new user which will return a user ID that can be used with other operations.
+      operationId: createUser
+      tags:
+        - User
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  $ref: '#/components/schemas/Username'
+                email:
+                  $ref: '#/components/schemas/Email'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      userId:
+                        $ref: '#/components/schemas/UserId'
                       username:
                         $ref: '#/components/schemas/Username'
                       email:
                         $ref: '#/components/schemas/Email'
-            responses:
-              '201':
-                description: User created successfully
-                content:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        data:
-                          type: object
-                          properties:
-                            userId:
-                              $ref: '#/components/schemas/UserId'
-                            username:
-                              $ref: '#/components/schemas/Username'
-                            email:
-                              $ref: '#/components/schemas/Email'
-                            createdAt:
-                              $ref: '#/components/schemas/CreatedAt'
-              '400':
-                description: Invalid request
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
-                    examples:
-                      default:
-                        value:
-                          type: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/409'
-                          title: Invalid request
-                          status: 400
-                          detail: The request has incorrect or missing data. Please check your request and try again.
-                          instance: '/auth/users'
-              '409':
-                description: User already exists
-                content:
-                  application/problem+json:
-                    schema:
-                      allOf:
-                        - $ref: '#/components/schemas/ProblemDetails'
-                        - type: object
-                          properties:
-                            message:
-                              type: string
-                              description: Error message indicating the user already exists
-                              example: User already exists
-                            user:
-                              type: object
-                              description: The existing user's information
-                              properties:
-                                userId:
-                                  $ref: '#/components/schemas/UserId'
-                    examples:
-                      default:
-                        value:
-                          type: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/409'
-                          title: Conflict
-                          status: 409
-                          detail: A user with this username or email already exists
-                          instance: '/auth/users'
-                          message: User already exists
-                          user:
-                            userId: '123e4567-e89b-12d3-a456-426614174000'
-
-        /audio:
-          post:
-            operationId: createAudio
-            summary: Upload an audio file with metadata
-            description: >-
-              Upload an audio file with metadata using multipart form data.
-              The audio file and metadata are processed asynchronously.
-            security:
-              - AccessToken: []
-            x-scalar-stability: experimental
-            tags:
-              - Audio
-            requestBody:
-              content:
-                multipart/form-data:
-                  schema:
-                    type: object
-                    required:
-                      - resource
-                      - datasetCode
-                      - textId
-                      - text
-                      - file
+                      createdAt:
+                        $ref: '#/components/schemas/CreatedAt'
+        '400':
+          description: Invalid request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              examples:
+                default:
+                  value:
+                    type: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/409'
+                    title: Invalid request
+                    status: 400
+                    detail: The request has incorrect or missing data. Please check your request and try again.
+                    instance: '/auth/users'
+        '409':
+          description: User already exists
+          content:
+            application/problem+json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ProblemDetails'
+                  - type: object
                     properties:
-                      resource:
+                      message:
                         type: string
-                        enum: [scripted]
-                        description: Resource type (currently only 'scripted' supported)
-                        example: scripted
-                      datasetCode:
-                        type: string
-                        description: Dataset code identifier
-                        example: fr
-                      variantCode:
-                        type: string
-                        description: Optional variant code
-                        example: fr-metro
-                      accentCode:
-                        type: string
-                        description: Optional accent code
-                        example: fr-metro-south
-                      textId:
-                        type: string
-                        description: Text identifier (UUID or hash, exactly 36 or 64 characters)
-                        example: 05c3ac58-2fcf-419f-93af-48239236836c
-                      text:
-                        type: string
-                        description: The sentence text content
-                        maxLength: 1000
-                        example: 'Bonjour, comment allez-vous ?'
-                      hash:
-                        $ref: '#/components/schemas/Hash'
-                      userId:
-                        $ref: '#/components/schemas/UserId'
-                      age:
-                        $ref: '#/components/schemas/Age'
-                      gender:
-                        $ref: '#/components/schemas/Gender'
-                      file:
-                        type: string
-                        format: binary
-                        description: Audio file to upload
-            responses:
-              '202':
-                description: Audio upload accepted and queued for processing
-                headers:
-                  Location:
-                    description: URI of the newly created audio record
-                    schema:
-                      type: string
-                      format: uri
-                      example: https://api.example.com/audio/05c3ac58-2fcf-419f-93af-48239236836c
-                content:
-                  application/json:
-                    schema:
-                      $ref: '#/components/schemas/AudioResponse'
-              '400':
-                description: Invalid request
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
-              '413':
-                description: Payload Too Large
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
+                        description: Error message indicating the user already exists
+                        example: User already exists
+                      user:
+                        type: object
+                        description: The existing user's information
+                        properties:
+                          userId:
+                            $ref: '#/components/schemas/UserId'
+              examples:
+                default:
+                  value:
+                    type: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/409'
+                    title: Conflict
+                    status: 409
+                    detail: A user with this username or email already exists
+                    instance: '/auth/users'
+                    message: User already exists
+                    user:
+                      userId: '123e4567-e89b-12d3-a456-426614174000'
 
-        /audio/{id}:
-          parameters:
-            - name: id
-              in: path
-              required: true
+  /audio:
+    post:
+      operationId: createAudio
+      summary: Upload an audio file with metadata
+      description: >-
+        Upload an audio file with metadata using multipart form data.
+        The audio file and metadata are processed asynchronously.
+      security:
+        - AccessToken: []
+      x-scalar-stability: experimental
+      tags:
+        - Audio
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - resource
+                - datasetCode
+                - textId
+                - text
+                - file
+              properties:
+                resource:
+                  type: string
+                  enum: [scripted]
+                  description: Resource type (currently only 'scripted' supported)
+                  example: scripted
+                datasetCode:
+                  type: string
+                  description: Dataset code identifier
+                  example: fr
+                variantCode:
+                  type: string
+                  description: Optional variant code
+                  example: fr-metro
+                accentCode:
+                  type: string
+                  description: Optional accent code
+                  example: fr-metro-south
+                textId:
+                  type: string
+                  description: Text identifier (UUID or hash, exactly 36 or 64 characters)
+                  example: 05c3ac58-2fcf-419f-93af-48239236836c
+                text:
+                  type: string
+                  description: The sentence text content
+                  maxLength: 1000
+                  example: 'Bonjour, comment allez-vous ?'
+                hash:
+                  $ref: '#/components/schemas/Hash'
+                userId:
+                  $ref: '#/components/schemas/UserId'
+                age:
+                  $ref: '#/components/schemas/Age'
+                gender:
+                  $ref: '#/components/schemas/Gender'
+                file:
+                  type: string
+                  format: binary
+                  description: Audio file to upload
+      responses:
+        '202':
+          description: Audio upload accepted and queued for processing
+          headers:
+            Location:
+              description: URI of the newly created audio record
               schema:
                 type: string
-                format: uuid
-                description: The identifier of the audio record.
-                example: 05c3ac58-2fcf-419f-93af-48239236836c
-          get:
-            operationId: getOneAudio
-            summary: Get an audio record
-            description: Retrieve an audio record by its ID.
-            security:
-              - AccessToken: []
-            x-scalar-stability: experimental
-            tags:
-              - Audio
-            responses:
-              '200':
-                description: An audio record
-                content:
-                  application/json:
-                    schema:
-                      $ref: '#/components/schemas/AudioResponse'
-                    examples:
-                      queued:
-                        summary: Audio record in queued state
-                        value:
-                          id: '05c3ac58-2fcf-419f-93af-48239236836c'
-                          resource: 'scripted'
-                          datasetCode: 'fr'
-                          variantCode: 'fr-metro'
-                          accentCode: 'fr-metro-south'
-                          durationMs: 8192
-                          url: null
-                          status: 'queued'
-                          createdAt: '2024-10-01T12:00:00Z'
-                          updatedAt: '2024-10-01T12:00:00Z'
-                          metadata:
-                            sentenceId: '05c3ac58-2fcf-419f-93af-48239236836c'
-                            sentence: 'Bonjour, comment allez-vous ?'
-                            age: 'thirties'
-                            gender: 'male_masculine'
-                            upVotes: 0
-                            downVotes: 0
-                            validatedAt: null
-                            rejectedAt: null
-                      validated:
-                        summary: Audio record in validated state
-                        value:
-                          id: '05c3ac58-2fcf-419f-93af-48239236836c'
-                          resource: 'scripted'
-                          datasetCode: 'fr'
-                          variantCode: 'fr-metro'
-                          accentCode: 'fr-metro-south'
-                          durationMs: 8192
-                          url: 'https://api.example.com/files/audio/05c3ac58-2fcf-419f-93af-48239236836c'
-                          status: 'validated'
-                          createdAt: '2024-10-01T12:00:00Z'
-                          updatedAt: '2024-10-01T12:10:00Z'
-                          metadata:
-                            sentenceId: '05c3ac58-2fcf-419f-93af-48239236836c'
-                            sentence: 'Bonjour, comment allez-vous ?'
-                            age: 'thirties'
-                            gender: 'male_masculine'
-                            upVotes: 5
-                            downVotes: 1
-                            validatedAt: '2024-10-01T12:10:00Z'
-                            rejectedAt: null
-              '400':
-                description: Invalid request
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
-              '404':
-                description: Audio record not found
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
-                    examples:
-                      not_found:
-                        value:
-                          title: 'Not Found'
-                          status: 404
-                          detail: 'Audio record with ID 05c3ac58-2fcf-419f-93af-48239236836c not found'
+                format: uri
+                example: https://api.example.com/audio/05c3ac58-2fcf-419f-93af-48239236836c
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudioResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '413':
+          description: Payload Too Large
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
 
-        /audio/datasets/codes:
-          get:
-            operationId: getDatasetCodes
-            summary: Get available dataset codes with language information
-            description: >-
-              Retrieve available dataset codes with language, variant, and accent information.
-              Can be filtered by service type and resource type. Note: service and resource parameters
-              are co-dependent - either both must be provided or neither.
-              This is a temporary place for this functionality, it will be moved to the upcoming language microservice.
-            tags:
-              - General
-            security: [] # No protection required
-            x-scalar-stability: experimental
-            parameters:
-              - name: service
-                in: query
-                required: false
-                schema:
-                  $ref: '#/components/schemas/ServiceType'
-                description: Filter by service type. Must be provided together with resource parameter.
-              - name: resource
-                in: query
-                required: false
-                schema:
-                  $ref: '#/components/schemas/ResourceType'
-                description: Filter by resource type (currently only 'scripted' is supported). Must be provided together with service parameter.
-              - name: detailed
-                in: query
-                required: false
-                schema:
-                  type: boolean
-                description: >-
-                  Return detailed information including variants and accents.
-                  Use as a flag without value (e.g., `?detailed` for true, omit for false).
-            responses:
-              '200':
-                description: A list of available dataset codes with language information
-                content:
-                  application/json:
-                    schema:
-                      type: array
-                      items:
-                        oneOf:
-                          - $ref: '#/components/schemas/Language'
-                          - $ref: '#/components/schemas/LanguageSummary'
-                    examples:
-                      detailed:
-                        summary: Detailed response with variants and accents
-                        value:
-                          - id: 104
-                            code: 'fr'
-                            target_sentence_count: 5000
-                            english_name: 'French'
-                            native_name: 'Français'
-                            is_contributable: 0
-                            is_translated: 1
-                            text_direction: 'LTR'
-                            variants:
-                              - id: 2651
-                                code: 'fr-metro'
-                                name: 'Français de métropole'
-                                type: null
-                                locale_id: 104
-                              - id: 2652
-                                code: 'fr-europe'
-                                name: "Français d'Europe"
-                                type: null
-                                locale_id: 104
-                            predefined_accents:
-                              - id: 2478
-                                code: 'fr-metro-south'
-                                name: 'Français du sud de la France'
-                                locale_id: 104
-                              - id: 2479
-                                code: 'fr-metro-north'
-                                name: 'Français du nord de la France'
-                                locale_id: 104
-                      summary:
-                        summary: Summary response without variants and accents
-                        value:
-                          - code: 'fr'
-                            english_name: 'French'
-                            native_name: 'Français'
-                            variants:
-                              - code: 'fr-metro'
-                                name: 'Français de métropole'
-                              - code: 'fr-europe'
-                                name: "Français d'Europe"
-                            predefined_accents:
-                              - code: 'fr-metro-south'
-                                name: 'Français du sud de la France'
-                              - code: 'fr-metro-north'
-                                name: 'Français du nord de la France'
-              '400':
-                description: Invalid request parameters
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
-                    examples:
-                      co_dependency_error:
-                        summary: Service and resource co-dependency error
-                        value:
-                          title: Invalid request
-                          status: 400
-                          detail: 'Service and resource parameters are co-dependent. Either provide both or neither.'
-                      invalid_parameters:
-                        summary: Invalid parameter values
-                        value:
-                          title: Invalid request
-                          status: 400
-                          detail: 'The request contains invalid parameters. Please check your query parameters and try again.'
+  /audio/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          description: The identifier of the audio record.
+          example: 05c3ac58-2fcf-419f-93af-48239236836c
+    get:
+      operationId: getOneAudio
+      summary: Get an audio record
+      description: Retrieve an audio record by its ID.
+      security:
+        - AccessToken: []
+      x-scalar-stability: experimental
+      tags:
+        - Audio
+      responses:
+        '200':
+          description: An audio record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudioResponse'
+              examples:
+                queued:
+                  summary: Audio record in queued state
+                  value:
+                    id: '05c3ac58-2fcf-419f-93af-48239236836c'
+                    resource: 'scripted'
+                    datasetCode: 'fr'
+                    variantCode: 'fr-metro'
+                    accentCode: 'fr-metro-south'
+                    durationMs: 8192
+                    url: null
+                    status: 'queued'
+                    createdAt: '2024-10-01T12:00:00Z'
+                    updatedAt: '2024-10-01T12:00:00Z'
+                    metadata:
+                      sentenceId: '05c3ac58-2fcf-419f-93af-48239236836c'
+                      sentence: 'Bonjour, comment allez-vous ?'
+                      age: 'thirties'
+                      gender: 'male_masculine'
+                      upVotes: 0
+                      downVotes: 0
+                      validatedAt: null
+                      rejectedAt: null
+                validated:
+                  summary: Audio record in validated state
+                  value:
+                    id: '05c3ac58-2fcf-419f-93af-48239236836c'
+                    resource: 'scripted'
+                    datasetCode: 'fr'
+                    variantCode: 'fr-metro'
+                    accentCode: 'fr-metro-south'
+                    durationMs: 8192
+                    url: 'https://api.example.com/files/audio/05c3ac58-2fcf-419f-93af-48239236836c'
+                    status: 'validated'
+                    createdAt: '2024-10-01T12:00:00Z'
+                    updatedAt: '2024-10-01T12:10:00Z'
+                    metadata:
+                      sentenceId: '05c3ac58-2fcf-419f-93af-48239236836c'
+                      sentence: 'Bonjour, comment allez-vous ?'
+                      age: 'thirties'
+                      gender: 'male_masculine'
+                      upVotes: 5
+                      downVotes: 1
+                      validatedAt: '2024-10-01T12:10:00Z'
+                      rejectedAt: null
+        '400':
+          description: Invalid request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Audio record not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              examples:
+                not_found:
+                  value:
+                    title: 'Not Found'
+                    status: 404
+                    detail: 'Audio record with ID 05c3ac58-2fcf-419f-93af-48239236836c not found'
 
-        /text/sentences:
-          get:
-            operationId: getSentences
-            summary: Get a collection of sentences
-            description: >-
-              Retrieve a collection of sentences for text processing.
-            security:
-              - AccessToken: []
-            x-scalar-stability: experimental
-            tags:
-              - Text
-            parameters:
-              - name: languageCode
-                in: query
-                required: true
-                schema:
-                  type: string
-                  minLength: 1
-                  maxLength: 7
-                  description: The language code for the sentences
-                  example: de
-              - name: status
-                in: query
-                required: false
-                schema:
-                  type: string
-                  enum: [validated, unverified]
-                  description: Filter by validation status
-                  example: validated
-              - name: type
-                in: query
-                required: false
-                schema:
-                  type: string
-                  enum: [sentence, question]
-                  default: sentence
-                  description: Type of text content
-                  example: sentence
-              - name: taxonomy
-                in: query
-                required: false
-                style: deepObject
-                explode: true
-                schema:
-                  type: object
-                  properties:
-                    taxonomyItems:
-                      type: array
-                      items:
-                        type: string
-                  description: |
-                    Filter sentences by taxonomy metadata.
+  /audio/datasets/codes:
+    get:
+      operationId: getDatasetCodes
+      summary: Get available dataset codes with language information
+      description: >-
+        Retrieve available dataset codes with language, variant, and accent information.
+        Can be filtered by service type and resource type. Note: service and resource parameters
+        are co-dependent - either both must be provided or neither.
+        This is a temporary place for this functionality, it will be moved to the upcoming language microservice.
+      tags:
+        - General
+      security: [] # No protection required
+      x-scalar-stability: experimental
+      parameters:
+        - name: service
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/ServiceType'
+          description: Filter by service type. Must be provided together with resource parameter.
+        - name: resource
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/ResourceType'
+          description: Filter by resource type (currently only 'scripted' is supported). Must be provided together with service parameter.
+        - name: detailed
+          in: query
+          required: false
+          schema:
+            type: boolean
+          description: >-
+            Return detailed information including variants and accents.
+            Use as a flag without value (e.g., `?detailed` for true, omit for false).
+      responses:
+        '200':
+          description: A list of available dataset codes with language information
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/Language'
+                    - $ref: '#/components/schemas/LanguageSummary'
+              examples:
+                detailed:
+                  summary: Detailed response with variants and accents
+                  value:
+                    - id: 104
+                      code: 'fr'
+                      target_sentence_count: 5000
+                      english_name: 'French'
+                      native_name: 'Français'
+                      is_contributable: 0
+                      is_translated: 1
+                      text_direction: 'LTR'
+                      variants:
+                        - id: 2651
+                          code: 'fr-metro'
+                          name: 'Français de métropole'
+                          type: null
+                          locale_id: 104
+                        - id: 2652
+                          code: 'fr-europe'
+                          name: "Français d'Europe"
+                          type: null
+                          locale_id: 104
+                      predefined_accents:
+                        - id: 2478
+                          code: 'fr-metro-south'
+                          name: 'Français du sud de la France'
+                          locale_id: 104
+                        - id: 2479
+                          code: 'fr-metro-north'
+                          name: 'Français du nord de la France'
+                          locale_id: 104
+                summary:
+                  summary: Summary response without variants and accents
+                  value:
+                    - code: 'fr'
+                      english_name: 'French'
+                      native_name: 'Français'
+                      variants:
+                        - code: 'fr-metro'
+                          name: 'Français de métropole'
+                        - code: 'fr-europe'
+                          name: "Français d'Europe"
+                      predefined_accents:
+                        - code: 'fr-metro-south'
+                          name: 'Français du sud de la France'
+                        - code: 'fr-metro-north'
+                          name: 'Français du nord de la France'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              examples:
+                co_dependency_error:
+                  summary: Service and resource co-dependency error
+                  value:
+                    title: Invalid request
+                    status: 400
+                    detail: 'Service and resource parameters are co-dependent. Either provide both or neither.'
+                invalid_parameters:
+                  summary: Invalid parameter values
+                  value:
+                    title: Invalid request
+                    status: 400
+                    detail: 'The request contains invalid parameters. Please check your query parameters and try again.'
 
-                    Use `taxonomy[{name}]={value}` format where `{name}` is the taxonomy field name and `{value}` is the term within that taxonomy.
-                    For multiple values, provide the key multiple times. For example `taxonomy[tea]=assam&taxonomy[tea]=darjeeling`.
-
-                    When selecting multiple values for a single taxonomy field, the results will include sentences that match any of the provided values (logical OR).
-                    When specifying multiple different taxonomy fields, the results will include sentences that match all the provided fields (logical AND).
-                  example:
-                    cloud: cumulus
-                    tea:
-                      - assam
-                      - darjeeling
-              - name: offset
-                in: query
-                required: false
-                schema:
-                  type: integer
-                  minimum: 0
-                  default: 0
-                  description: Number of records to skip
-                  example: 0
-              - name: limit
-                in: query
-                required: false
-                schema:
-                  type: integer
-                  minimum: 1
-                  maximum: 50
-                  default: 10
-                  description: Maximum number of records to return
-                  example: 10
-            responses:
-              '200':
-                description: A collection of sentences
-                content:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        data:
-                          type: array
-                          items:
-                            $ref: '#/components/schemas/Sentence'
-                        meta:
-                          type: object
-                          properties:
-                            offset:
-                              type: integer
-                              description: Number of records skipped
-                              example: 0
-                            limit:
-                              type: integer
-                              description: Maximum number of records requested
-                              example: 5
-                            returned:
-                              type: integer
-                              description: Actual number of records returned
-                              example: 1
-                    examples:
-                      default:
-                        value:
-                          data:
-                            - id: 12345
-                              text: 'Dies ist ein Beispielsatz.'
-                              languageCode: 'de'
-                              bucket: 'train'
-                              version: 1
-                              clipsCount: 3
-                              hasValidClip: true
-                              isValidated: true
-                              source: 'wikipedia'
-                              createdAt: '2025-08-08T08:19:29Z'
-                              hash: 'a1b2c3d4e5f6789abcdef123456789abcdef123456789abcdef123456789abcd'
-                          meta:
-                            offset: 0
-                            limit: 5
-                            returned: 1
-              '400':
-                description: Validation Failed
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ValidationError'
-                    examples:
-                      default:
-                        value:
-                          type: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/400'
-                          status: 400
-                          title: 'Validation Failed'
-                          detail: 'The request contains invalid parameters'
-                          instance: '/text/sentences?languageCode=&status=123'
-                          errors:
-                            languageCode: 'languageCode should not be empty'
-                            status: 'status must be one of the following values: validated, unverified'
-              '401':
-                description: Unauthorized
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/UnauthorizedError'
-                    examples:
-                      default:
-                        value:
-                          type: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/401'
-                          status: 401
-                          title: 'Unauthorized'
-                          detail: 'Invalid access token'
-                          instance: '/text/sentences'
-                          message: 'Invalid access token'
-                          error: 'Unauthorized'
-              '501':
-                description: Not Implemented
-                content:
-                  application/problem+json:
-                    schema:
-                      $ref: '#/components/schemas/ProblemDetails'
-                    examples:
-                      default:
-                        value:
-                          type: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/501'
-                          title: 'Not Implemented'
-                          status: 501
-                          detail: 'Retrieval of questions is unsupported at this time.'
-                          instance: '/text/sentences?languageCode=en&type=question'
-                          timestamp: '2025-08-09T09:21:38.176Z'
-
-      components:
-        schemas:
-          Username:
+  /text/sentences:
+    get:
+      operationId: getSentences
+      summary: Get a collection of sentences
+      description: >-
+        Retrieve a collection of sentences for text processing.
+      security:
+        - AccessToken: []
+      x-scalar-stability: experimental
+      tags:
+        - Text
+      parameters:
+        - name: languageCode
+          in: query
+          required: true
+          schema:
             type: string
-            description: User's username
-            example: janedoe
-
-          Email:
+            minLength: 1
+            maxLength: 7
+            description: The language code for the sentences
+            example: de
+        - name: status
+          in: query
+          required: false
+          schema:
             type: string
-            format: email
-            description: User's email address
-            example: janedoe@example.com
-
-          ServiceType:
-            type: string
-            enum: [text, audio]
-            description: Type of service
-            example: text
-
-          ResourceType:
-            type: string
-            enum: [scripted]
-            description: Type of resource (currently only 'scripted' is supported)
-            example: scripted
-
-          ResourceStatus:
-            type: string
-            enum: [queued, error, pending_validation, validated, rejected]
-            description: Status of the added resource
-            readOnly: true
+            enum: [validated, unverified]
+            description: Filter by validation status
             example: validated
-
-          Locale:
+        - name: type
+          in: query
+          required: false
+          schema:
             type: string
-            description: The locale identifier for this item. A full list is available at /locales.
-            example: pt-BR
+            enum: [sentence, question]
+            default: sentence
+            description: Type of text content
+            example: sentence
+        - name: taxonomy
+          in: query
+          required: false
+          style: deepObject
+          explode: true
+          schema:
+            type: object
+            properties:
+              taxonomyItems:
+                type: array
+                items:
+                  type: string
+            description: |
+              Filter sentences by taxonomy metadata.
 
-          CreatedAt:
-            type: string
-            format: date-time
-            description: The date and time when the item was created
-            example: '2024-10-01T12:00:00Z'
-            readOnly: true
+              Use `taxonomy[{name}]={value}` format where `{name}` is the taxonomy field name and `{value}` is the term within that taxonomy.
+              For multiple values, provide the key multiple times. For example `taxonomy[tea]=assam&taxonomy[tea]=darjeeling`.
 
-          UpdatedAt:
-            type: string
-            format: date-time
-            description: The date and time when the item was last updated
-            example: '2024-10-01T12:00:00Z'
-            readOnly: true
-
-          ValidatedAt:
-            type: [string, 'null']
-            format: date-time
-            description: The date and time when the item was validated
-            example: '2024-10-01T12:00:00Z'
-            readOnly: true
-
-          RejectedAt:
-            type: [string, 'null']
-            format: date-time
-            description: The date and time when the item was invalidated
-            example: '2024-10-01T12:00:00Z'
-            readOnly: true
-
-          UpVotes:
+              When selecting multiple values for a single taxonomy field, the results will include sentences that match any of the provided values (logical OR).
+              When specifying multiple different taxonomy fields, the results will include sentences that match all the provided fields (logical AND).
+            example:
+              cloud: cumulus
+              tea:
+                - assam
+                - darjeeling
+        - name: offset
+          in: query
+          required: false
+          schema:
             type: integer
-            description: Number of up votes for the object
-            example: 1
-            readOnly: true
-
-          DownVotes:
+            minimum: 0
+            default: 0
+            description: Number of records to skip
+            example: 0
+        - name: limit
+          in: query
+          required: false
+          schema:
             type: integer
-            description: Number of down votes for the object
-            example: 1
-            readOnly: true
-
-          Duration:
-            type: number
-            description: Audio duration in milliseconds. This file is empty if no audio file is present.
-            example: 5000
-            readOnly: true
-
-          UserId:
-            type: string
-            format: uuid
-            description: 'User ID (UUID v4) created by the Auth service at demand of the API client application to represent its unique user.'
-            example: '123e4567-e89b-12d3-a456-426614174000'
-            readOnly: true
-
-          Age:
-            type: [string, 'null']
-            enum:
-              [
-                teens,
-                twenties,
-                thirties,
-                fourties,
-                fifties,
-                sixties,
-                seventies,
-                eighties,
-                nineties,
-              ]
-            description: Age band of the user if provided. One of ['teens', 'twenties', 'thirties', 'fourties', 'fifties', 'sixties', 'seventies', 'eighties', 'nineties'].
-            example: 'sixties'
-
-          Gender:
-            type: [string, 'null']
-            enum:
-              [
-                male_masculine,
-                female_feminine,
-                intersex,
-                transgender,
-                non-binary,
-                do_not_wish_to_say,
-              ]
-            description: Gender preference of the user if provided. One of ['male_masculine', 'female_feminine', 'intersex', 'transgender', 'non-binary', 'do_not_wish_to_say'].
-            example: 'male_masculine'
-            maxLength: 50
-
-          Url:
-            type: [string, 'null']
-            format: uri
-            description: Audio file URL (available after processing)
-            example: 'https://example.com/voice/files/05c3ac58-2fcf-419f-93af-48239236836c'
-            readOnly: true
-
-          Hash:
-            type: string
-            description: SHA-256 hash of data for integrity verification
-            example: 'a1b2c3d4e5f6...'
-            readOnly: true
-
-          Variant:
-            type: object
-            description: A language variant
-            properties:
-              id:
-                type: integer
-                format: int64
-                description: Unique identifier for the variant
-                example: 2651
-              code:
-                type: string
-                description: Variant code identifier
-                example: 'fr-metro'
-              name:
-                type: string
-                description: Variant display name
-                example: 'Français de métropole'
-              type:
-                type: [string, 'null']
-                description: Variant type classification (currently not in use)
-              locale_id:
-                type: integer
-                format: int64
-                description: Reference to the parent locale/language
-                example: 104
-          VariantSummary:
-            type: object
-            description: Summary of a language variant
-            properties:
-              code:
-                type: string
-                description: Variant code identifier
-                example: 'fr-metro'
-              name:
-                type: string
-                description: Variant display name
-                example: 'Français de métropole'
-
-          Accent:
-            type: object
-            description: A predefined accent for a language
-            properties:
-              id:
-                type: integer
-                format: int64
-                description: Unique identifier for the accent
-                example: 2478
-              code:
-                type: string
-                description: Accent code identifier
-                example: 'fr-metro-south'
-              name:
-                type: string
-                description: Accent display name
-                example: 'Français du sud de la France'
-              locale_id:
-                type: integer
-                format: int64
-                description: Reference to the parent locale/language
-                example: 104
-          AccentSummary:
-            type: object
-            description: Summary of a predefined accent
-            properties:
-              code:
-                type: string
-                description: Accent code identifier
-                example: 'fr-metro-south'
-              name:
-                type: string
-                description: Accent display name
-                example: 'Français du sud de la France'
-
-          Language:
-            type: object
-            description: A complete language definition with variants and accents, as defined in Pontoon and Common Voice
-            properties:
-              id:
-                type: integer
-                format: int64
-                description: Unique identifier for the language
-                example: 104
-              code:
-                type: string
-                description: Language code identifier
-                example: 'fr'
-              target_sentence_count:
-                type: integer
-                description: Target number of sentences for this language
-                example: 5000
-              english_name:
-                type: string
-                description: English name of the language
-                example: 'French'
-              native_name:
-                type: string
-                description: Native name of the language
-                example: 'Français'
-              is_contributable:
-                type: integer
-                enum: [0, 1]
-                description: Whether the language can be contributed to with audio
-                example: 0
-              is_translated:
-                type: integer
-                enum: [0, 1]
-                description: Whether the language has enough translations for adding sentences
-                example: 1
-              text_direction:
-                type: string
-                description: Text direction (LTR or RTL)
-                example: 'LTR'
-              variants:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Variant'
-                description: Available variants for this language
-              predefined_accents:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Accent'
-                description: Predefined accents for this language
-          LanguageSummary:
-            type: object
-            description: Summary of a language with basic variant and accent information
-            properties:
-              code:
-                type: string
-                description: Language code identifier
-                example: 'fr'
-              english_name:
-                type: string
-                description: English name of the language
-                example: 'French'
-              native_name:
-                type: string
-                description: Native name of the language
-                example: 'Français'
-              variants:
-                type: array
-                items:
-                  $ref: '#/components/schemas/VariantSummary'
-                description: Available variants for this language
-              predefined_accents:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AccentSummary'
-                description: Predefined accents for this language
-
-          AudioResponse:
-            type: object
-            description: Audio resource response
-            properties:
-              id:
-                type: string
-                format: uuid
-                description: Unique identifier for the audio resource
-                example: 05c3ac58-2fcf-419f-93af-48239236836c
-              resource:
-                $ref: '#/components/schemas/ResourceType'
-              datasetCode:
-                type: string
-                description: Dataset code identifier. For single language datasets, it is the language code as defined in Pontoon and Common Voice.
-                example: fr
-              variantCode:
-                type: [string, 'null']
-                description: Variant code if provided - as defined in Common Voice.
-                example: fr-metro
-              accentCode:
-                type: [string, 'null']
-                description: Predefined-Accent code if provided - as defined in Common Voice.
-                example: fr-metro-south
-              durationMs:
-                $ref: '#/components/schemas/Duration'
-              url:
-                $ref: '#/components/schemas/Url'
-              status:
-                $ref: '#/components/schemas/ResourceStatus'
-              createdAt:
-                $ref: '#/components/schemas/CreatedAt'
-              updatedAt:
-                $ref: '#/components/schemas/UpdatedAt'
-              metadata:
+            minimum: 1
+            maximum: 50
+            default: 10
+            description: Maximum number of records to return
+            example: 10
+      responses:
+        '200':
+          description: A collection of sentences
+          content:
+            application/json:
+              schema:
                 type: object
-                description: Audio metadata
                 properties:
-                  sentenceId:
-                    type: string
-                    description: Sentence identifier
-                    example: 05c3ac58-2fcf-419f-93af-48239236836c
-                  sentence:
-                    type: string
-                    description: Sentence text
-                    example: 'Bonjour, comment allez-vous ?'
-                  age:
-                    $ref: '#/components/schemas/Age'
-                  gender:
-                    $ref: '#/components/schemas/Gender'
-                  upVotes:
-                    $ref: '#/components/schemas/UpVotes'
-                  downVotes:
-                    $ref: '#/components/schemas/DownVotes'
-                  validatedAt:
-                    $ref: '#/components/schemas/ValidatedAt'
-                  rejectedAt:
-                    $ref: '#/components/schemas/RejectedAt'
-
-          Sentence:
-            type: object
-            description: The text sentence record
-            properties:
-              id:
-                type: string
-                description: Unique identifier for the sentence
-                example: '000004fd3070f8d5947dd5b928417edb97e339db5251efbbdab0067a8eaa7b9b'
-                readOnly: true
-              text:
-                type: string
-                description: The sentence text content
-                example: 'Die Oberfläche ist eben.'
-                maxLength: 65535
-              languageCode:
-                $ref: '#/components/schemas/Locale'
-              bucket:
-                type: string
-                description: Bucket classification for the sentence
-                example: 'train'
-              version:
-                type: integer
-                description: Version number of the sentence
-                example: 1
-              clipsCount:
-                type: integer
-                description: Number of audio clips associated with this sentence
-                example: 3
-              hasValidClip:
-                type: boolean
-                description: Whether the sentence has at least one valid audio clip
-                example: true
-              isValidated:
-                type: boolean
-                description: Whether the sentence has been validated
-                example: true
-              source:
-                type: string
-                description: Source of the sentence
-                example: 'wiki'
-              createdAt:
-                $ref: '#/components/schemas/CreatedAt'
-              hash:
-                $ref: '#/components/schemas/Hash'
-
-          ProblemDetails:
-            type: object
-            properties:
-              type:
-                type: string
-                description: >-
-                  A URI reference that identifies the problem type.
-                example: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/503'
-              title:
-                type: string
-                description: >-
-                  A short summary of the problem type.
-                example: Service Unavailable
-              status:
-                type: integer
-                format: int32
-                description: >-
-                  The HTTP status code generated by the origin server for this occurrence
-                  of the problem.
-                minimum: 100
-                maximum: 600
-                example: 503
-              detail:
-                type: string
-                description: >-
-                  A human readable explanation specific to this occurrence of the
-                  problem that is helpful to locate the problem and give advice on how
-                  to proceed.
-                example: Access token has expired, please request a new one.
-              instance:
-                type: string
-                description: >-
-                  A URI reference that identifies the specific occurrence of the problem.
-                example: '/api/endpoint'
-
-          ValidationError:
-            allOf:
-              - $ref: '#/components/schemas/ProblemDetails'
-              - type: object
-                properties:
-                  errors:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Sentence'
+                  meta:
                     type: object
-                    description: Field-specific validation error messages
-                    additionalProperties:
-                      type: string
-                    example:
-                      language_code: 'languageCode should not be empty'
+                    properties:
+                      offset:
+                        type: integer
+                        description: Number of records skipped
+                        example: 0
+                      limit:
+                        type: integer
+                        description: Maximum number of records requested
+                        example: 5
+                      returned:
+                        type: integer
+                        description: Actual number of records returned
+                        example: 1
+              examples:
+                default:
+                  value:
+                    data:
+                      - id: 12345
+                        text: 'Dies ist ein Beispielsatz.'
+                        languageCode: 'de'
+                        bucket: 'train'
+                        version: 1
+                        clipsCount: 3
+                        hasValidClip: true
+                        isValidated: true
+                        source: 'wikipedia'
+                        createdAt: '2025-08-08T08:19:29Z'
+                        hash: 'a1b2c3d4e5f6789abcdef123456789abcdef123456789abcdef123456789abcd'
+                    meta:
+                      offset: 0
+                      limit: 5
+                      returned: 1
+        '400':
+          description: Validation Failed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+              examples:
+                default:
+                  value:
+                    type: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/400'
+                    status: 400
+                    title: 'Validation Failed'
+                    detail: 'The request contains invalid parameters'
+                    instance: '/text/sentences?languageCode=&status=123'
+                    errors:
+                      languageCode: 'languageCode should not be empty'
                       status: 'status must be one of the following values: validated, unverified'
+        '401':
+          description: Unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              examples:
+                default:
+                  value:
+                    type: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/401'
+                    status: 401
+                    title: 'Unauthorized'
+                    detail: 'Invalid access token'
+                    instance: '/text/sentences'
+                    message: 'Invalid access token'
+                    error: 'Unauthorized'
+        '501':
+          description: Not Implemented
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              examples:
+                default:
+                  value:
+                    type: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/501'
+                    title: 'Not Implemented'
+                    status: 501
+                    detail: 'Retrieval of questions is unsupported at this time.'
+                    instance: '/text/sentences?languageCode=en&type=question'
+                    timestamp: '2025-08-09T09:21:38.176Z'
 
-          UnauthorizedError:
-            allOf:
-              - $ref: '#/components/schemas/ProblemDetails'
-              - type: object
-                properties:
-                  message:
-                    type: string
-                    description: Additional error message
-                    example: 'Invalid access token'
-                  error:
-                    type: string
-                    description: Error type identifier
-                    example: 'Unauthorized'
+components:
+  schemas:
+    Username:
+      type: string
+      description: User's username
+      example: janedoe
 
-        securitySchemes:
-          AccessToken:
-            type: http
-            scheme: bearer
-            bearerFormat: JWT
-            description: >-
-              Use the access token obtained from the `/auth/token` endpoint.
-              The token is in JWT format and should be included in the `Authorization` header as `Bearer <token>`.
+    Email:
+      type: string
+      format: email
+      description: User's email address
+      example: janedoe@example.com
+
+    ServiceType:
+      type: string
+      enum: [text, audio]
+      description: Type of service
+      example: text
+
+    ResourceType:
+      type: string
+      enum: [scripted]
+      description: Type of resource (currently only 'scripted' is supported)
+      example: scripted
+
+    ResourceStatus:
+      type: string
+      enum: [queued, error, pending_validation, validated, rejected]
+      description: Status of the added resource
+      readOnly: true
+      example: validated
+
+    Locale:
+      type: string
+      description: The locale identifier for this item. A full list is available at /locales.
+      example: pt-BR
+
+    CreatedAt:
+      type: string
+      format: date-time
+      description: The date and time when the item was created
+      example: '2024-10-01T12:00:00Z'
+      readOnly: true
+
+    UpdatedAt:
+      type: string
+      format: date-time
+      description: The date and time when the item was last updated
+      example: '2024-10-01T12:00:00Z'
+      readOnly: true
+
+    ValidatedAt:
+      type: [string, 'null']
+      format: date-time
+      description: The date and time when the item was validated
+      example: '2024-10-01T12:00:00Z'
+      readOnly: true
+
+    RejectedAt:
+      type: [string, 'null']
+      format: date-time
+      description: The date and time when the item was invalidated
+      example: '2024-10-01T12:00:00Z'
+      readOnly: true
+
+    UpVotes:
+      type: integer
+      description: Number of up votes for the object
+      example: 1
+      readOnly: true
+
+    DownVotes:
+      type: integer
+      description: Number of down votes for the object
+      example: 1
+      readOnly: true
+
+    Duration:
+      type: number
+      description: Audio duration in milliseconds. This file is empty if no audio file is present.
+      example: 5000
+      readOnly: true
+
+    UserId:
+      type: string
+      format: uuid
+      description: 'User ID (UUID v4) created by the Auth service at demand of the API client application to represent its unique user.'
+      example: '123e4567-e89b-12d3-a456-426614174000'
+      readOnly: true
+
+    Age:
+      type: [string, 'null']
+      enum:
+        [
+          teens,
+          twenties,
+          thirties,
+          fourties,
+          fifties,
+          sixties,
+          seventies,
+          eighties,
+          nineties,
+        ]
+      description: Age band of the user if provided. One of ['teens', 'twenties', 'thirties', 'fourties', 'fifties', 'sixties', 'seventies', 'eighties', 'nineties'].
+      example: 'sixties'
+
+    Gender:
+      type: [string, 'null']
+      enum:
+        [
+          male_masculine,
+          female_feminine,
+          intersex,
+          transgender,
+          non-binary,
+          do_not_wish_to_say,
+        ]
+      description: Gender preference of the user if provided. One of ['male_masculine', 'female_feminine', 'intersex', 'transgender', 'non-binary', 'do_not_wish_to_say'].
+      example: 'male_masculine'
+      maxLength: 50
+
+    Url:
+      type: [string, 'null']
+      format: uri
+      description: Audio file URL (available after processing)
+      example: 'https://example.com/voice/files/05c3ac58-2fcf-419f-93af-48239236836c'
+      readOnly: true
+
+    Hash:
+      type: string
+      description: SHA-256 hash of data for integrity verification
+      example: 'a1b2c3d4e5f6...'
+      readOnly: true
+
+    Variant:
+      type: object
+      description: A language variant
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the variant
+          example: 2651
+        code:
+          type: string
+          description: Variant code identifier
+          example: 'fr-metro'
+        name:
+          type: string
+          description: Variant display name
+          example: 'Français de métropole'
+        type:
+          type: [string, 'null']
+          description: Variant type classification (currently not in use)
+        locale_id:
+          type: integer
+          format: int64
+          description: Reference to the parent locale/language
+          example: 104
+    VariantSummary:
+      type: object
+      description: Summary of a language variant
+      properties:
+        code:
+          type: string
+          description: Variant code identifier
+          example: 'fr-metro'
+        name:
+          type: string
+          description: Variant display name
+          example: 'Français de métropole'
+
+    Accent:
+      type: object
+      description: A predefined accent for a language
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the accent
+          example: 2478
+        code:
+          type: string
+          description: Accent code identifier
+          example: 'fr-metro-south'
+        name:
+          type: string
+          description: Accent display name
+          example: 'Français du sud de la France'
+        locale_id:
+          type: integer
+          format: int64
+          description: Reference to the parent locale/language
+          example: 104
+    AccentSummary:
+      type: object
+      description: Summary of a predefined accent
+      properties:
+        code:
+          type: string
+          description: Accent code identifier
+          example: 'fr-metro-south'
+        name:
+          type: string
+          description: Accent display name
+          example: 'Français du sud de la France'
+
+    Language:
+      type: object
+      description: A complete language definition with variants and accents, as defined in Pontoon and Common Voice
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the language
+          example: 104
+        code:
+          type: string
+          description: Language code identifier
+          example: 'fr'
+        target_sentence_count:
+          type: integer
+          description: Target number of sentences for this language
+          example: 5000
+        english_name:
+          type: string
+          description: English name of the language
+          example: 'French'
+        native_name:
+          type: string
+          description: Native name of the language
+          example: 'Français'
+        is_contributable:
+          type: integer
+          enum: [0, 1]
+          description: Whether the language can be contributed to with audio
+          example: 0
+        is_translated:
+          type: integer
+          enum: [0, 1]
+          description: Whether the language has enough translations for adding sentences
+          example: 1
+        text_direction:
+          type: string
+          description: Text direction (LTR or RTL)
+          example: 'LTR'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/Variant'
+          description: Available variants for this language
+        predefined_accents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Accent'
+          description: Predefined accents for this language
+    LanguageSummary:
+      type: object
+      description: Summary of a language with basic variant and accent information
+      properties:
+        code:
+          type: string
+          description: Language code identifier
+          example: 'fr'
+        english_name:
+          type: string
+          description: English name of the language
+          example: 'French'
+        native_name:
+          type: string
+          description: Native name of the language
+          example: 'Français'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariantSummary'
+          description: Available variants for this language
+        predefined_accents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccentSummary'
+          description: Predefined accents for this language
+
+    AudioResponse:
+      type: object
+      description: Audio resource response
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the audio resource
+          example: 05c3ac58-2fcf-419f-93af-48239236836c
+        resource:
+          $ref: '#/components/schemas/ResourceType'
+        datasetCode:
+          type: string
+          description: Dataset code identifier. For single language datasets, it is the language code as defined in Pontoon and Common Voice.
+          example: fr
+        variantCode:
+          type: [string, 'null']
+          description: Variant code if provided - as defined in Common Voice.
+          example: fr-metro
+        accentCode:
+          type: [string, 'null']
+          description: Predefined-Accent code if provided - as defined in Common Voice.
+          example: fr-metro-south
+        durationMs:
+          $ref: '#/components/schemas/Duration'
+        url:
+          $ref: '#/components/schemas/Url'
+        status:
+          $ref: '#/components/schemas/ResourceStatus'
+        createdAt:
+          $ref: '#/components/schemas/CreatedAt'
+        updatedAt:
+          $ref: '#/components/schemas/UpdatedAt'
+        metadata:
+          type: object
+          description: Audio metadata
+          properties:
+            sentenceId:
+              type: string
+              description: Sentence identifier
+              example: 05c3ac58-2fcf-419f-93af-48239236836c
+            sentence:
+              type: string
+              description: Sentence text
+              example: 'Bonjour, comment allez-vous ?'
+            age:
+              $ref: '#/components/schemas/Age'
+            gender:
+              $ref: '#/components/schemas/Gender'
+            upVotes:
+              $ref: '#/components/schemas/UpVotes'
+            downVotes:
+              $ref: '#/components/schemas/DownVotes'
+            validatedAt:
+              $ref: '#/components/schemas/ValidatedAt'
+            rejectedAt:
+              $ref: '#/components/schemas/RejectedAt'
+
+    Sentence:
+      type: object
+      description: The text sentence record
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the sentence
+          example: '000004fd3070f8d5947dd5b928417edb97e339db5251efbbdab0067a8eaa7b9b'
+          readOnly: true
+        text:
+          type: string
+          description: The sentence text content
+          example: 'Die Oberfläche ist eben.'
+          maxLength: 65535
+        languageCode:
+          $ref: '#/components/schemas/Locale'
+        bucket:
+          type: string
+          description: Bucket classification for the sentence
+          example: 'train'
+        version:
+          type: integer
+          description: Version number of the sentence
+          example: 1
+        clipsCount:
+          type: integer
+          description: Number of audio clips associated with this sentence
+          example: 3
+        hasValidClip:
+          type: boolean
+          description: Whether the sentence has at least one valid audio clip
+          example: true
+        isValidated:
+          type: boolean
+          description: Whether the sentence has been validated
+          example: true
+        source:
+          type: string
+          description: Source of the sentence
+          example: 'wiki'
+        createdAt:
+          $ref: '#/components/schemas/CreatedAt'
+        hash:
+          $ref: '#/components/schemas/Hash'
+
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          description: >-
+            A URI reference that identifies the problem type.
+          example: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/503'
+        title:
+          type: string
+          description: >-
+            A short summary of the problem type.
+          example: Service Unavailable
+        status:
+          type: integer
+          format: int32
+          description: >-
+            The HTTP status code generated by the origin server for this occurrence
+            of the problem.
+          minimum: 100
+          maximum: 600
+          example: 503
+        detail:
+          type: string
+          description: >-
+            A human readable explanation specific to this occurrence of the
+            problem that is helpful to locate the problem and give advice on how
+            to proceed.
+          example: Access token has expired, please request a new one.
+        instance:
+          type: string
+          description: >-
+            A URI reference that identifies the specific occurrence of the problem.
+          example: '/api/endpoint'
+
+    ValidationError:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            errors:
+              type: object
+              description: Field-specific validation error messages
+              additionalProperties:
+                type: string
+              example:
+                language_code: 'languageCode should not be empty'
+                status: 'status must be one of the following values: validated, unverified'
+
+    UnauthorizedError:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            message:
+              type: string
+              description: Additional error message
+              example: 'Invalid access token'
+            error:
+              type: string
+              description: Error type identifier
+              example: 'Unauthorized'
+
+  securitySchemes:
+    AccessToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        Use the access token obtained from the `/auth/token` endpoint.
+        The token is in JWT format and should be included in the `Authorization` header as `Bearer <token>`.
     </script>
 
     <!-- Load the Script -->
