@@ -26,6 +26,10 @@ tags:
     description: Work with audio information and files.
   - name: Text
     description: Work with text and sentences.
+  - name: Dataset
+    description: Related to base dataset info.
+  - name: Language
+    description: Related to language info.
   - name: General
     description: Operations that are part of the general operation of the API.
 
@@ -544,11 +548,13 @@ paths:
       summary: Get available dataset codes with language information
       description: >-
         Retrieve available dataset codes with language, variant, and accent information.
-        Can be filtered by service type and resource type. Note: service and resource parameters
-        are co-dependent - either both must be provided or neither.
+        Can be filtered by service type and resource type, or by specific dataset code.
+        Note: service and resource parameters are co-dependent - either both must be provided or neither.
+        When using datasetCode, both service and resource parameters are required.
         This is a temporary place for this functionality, it will be moved to the upcoming language microservice.
       tags:
-        - General
+        - Dataset
+        - Language
       security: [] # No protection required
       x-scalar-stability: experimental
       parameters:
@@ -557,13 +563,24 @@ paths:
           required: false
           schema:
             $ref: '#/components/schemas/ServiceType'
-          description: Filter by service type. Must be provided together with resource parameter.
+          description: >-
+            Filter by service type. Must be provided together with resource parameter.
+            Required when using datasetCode.
         - name: resource
           in: query
           required: false
           schema:
             $ref: '#/components/schemas/ResourceType'
-          description: Filter by resource type (currently only 'scripted' is supported). Must be provided together with service parameter.
+          description: >-
+            Filter by resource type (currently only 'scripted' is supported). Must be provided together with service parameter.
+            Required when using datasetCode.
+        - name: datasetCode
+          in: query
+          required: false
+          schema:
+            type: string
+          description: >-
+            Get a specific dataset by its code. When using this parameter, both service and resource parameters are required.
         - name: detailed
           in: query
           required: false
@@ -574,18 +591,22 @@ paths:
             Use as a flag without value (e.g., `?detailed` for true, omit for false).
       responses:
         '200':
-          description: A list of available dataset codes with language information
+          description: >-
+            A list of available dataset codes with language information, or a single dataset when datasetCode is provided.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  oneOf:
-                    - $ref: '#/components/schemas/Language'
-                    - $ref: '#/components/schemas/LanguageSummary'
+                oneOf:
+                  - type: array
+                    items:
+                      oneOf:
+                        - $ref: '#/components/schemas/Language'
+                        - $ref: '#/components/schemas/LanguageSummary'
+                  - $ref: '#/components/schemas/Language'
+                  - $ref: '#/components/schemas/LanguageSummary'
               examples:
                 detailed:
-                  summary: Detailed response with variants and accents
+                  summary: Detailed response reflecting all values in the current database
                   value:
                     - id: 104
                       code: 'fr'
@@ -616,7 +637,7 @@ paths:
                           name: 'Français du nord de la France'
                           locale_id: 104
                 summary:
-                  summary: Summary response without variants and accents
+                  summary: Summary response without extra/detailed information
                   value:
                     - code: 'fr'
                       english_name: 'French'
@@ -631,6 +652,22 @@ paths:
                           name: 'Français du sud de la France'
                         - code: 'fr-metro-north'
                           name: 'Français du nord de la France'
+                single_dataset:
+                  summary: Single dataset response when datasetCode is provided
+                  value:
+                    code: 'fr'
+                    english_name: 'French'
+                    native_name: 'Français'
+                    variants:
+                      - code: 'fr-metro'
+                        name: 'Français de métropole'
+                      - code: 'fr-europe'
+                        name: "Français d'Europe"
+                    predefined_accents:
+                      - code: 'fr-metro-south'
+                        name: 'Français du sud de la France'
+                      - code: 'fr-metro-north'
+                        name: 'Français du nord de la France'
         '400':
           description: Invalid request parameters
           content:
@@ -644,12 +681,31 @@ paths:
                     title: Invalid request
                     status: 400
                     detail: 'Service and resource parameters are co-dependent. Either provide both or neither.'
+                dataset_code_requires_service_resource:
+                  summary: Dataset code requires service and resource
+                  value:
+                    title: Invalid request
+                    status: 400
+                    detail: 'Both service and resource parameters are required when using datasetCode.'
                 invalid_parameters:
                   summary: Invalid parameter values
                   value:
                     title: Invalid request
                     status: 400
                     detail: 'The request contains invalid parameters. Please check your query parameters and try again.'
+        '404':
+          description: Dataset not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              examples:
+                dataset_not_found:
+                  summary: Dataset code not found
+                  value:
+                    title: Dataset not found
+                    status: 404
+                    detail: 'Dataset code "fr" not found for service "text" and resource "scripted"'
 
   /text/sentences:
     get:
