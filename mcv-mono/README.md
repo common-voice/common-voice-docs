@@ -1,5 +1,3 @@
-# MCV Monorepo Public API
+# Mozilla Common Voice Documentation
 
-This is the public API documentation for the MCV monorepo. It will contain information about the available endpoints and how to interact with them.
-
-TBD
+This is the public documentation for the Mozilla Common Voice. It will contain usage information in multiple languages.
