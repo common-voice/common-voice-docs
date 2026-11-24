@@ -1,0 +1,35 @@
+{
+  "name": "common-voice-docs",
+  "private": true,
+  "description": "Public documentation for Mozilla Common Voice",
+  "license": "MPL-2.0",
+  "type": "module",
+  "packageManager": "pnpm@12.8.2",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "lint:md": "markdownlint-cli2",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --test 'src/**/*.test.mjs'",
+    "check": "pnpm format:check && pnpm lint:md && pnpm test && pnpm build"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "7.3.9",
+    "@astrojs/starlight": "0.43.1",
+    "astro": "7.4.12",
+    "astro-mermaid": "2.2.0",
+    "mermaid": "12.3.0",
+    "remark-heading-id": "1.0.1",
+    "sharp": "0.35.5",
+    "starlight-links-validator": "0.27.0"
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "0.24.1",
+    "prettier": "3.10.1"
+  }
+}
