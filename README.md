@@ -42,6 +42,12 @@ The pages are written in English, in `src/content/docs/en/`. Each other language
 - The sidebar's order and section names are set in `astro.config.mjs`.
 - A page for a part of Common Voice that is not open yet is a placeholder: a `Soon` badge in its front matter, a "Coming soon" note, and a heading with an id for each topic it will cover, so other pages can already link to it.
 
+## User manual {#user-manual}
+
+- The manual is in `src/content/docs/en/manual/`: short bullets, one image per part of a page, circled numbers in the image and in the text.
+- Write an image as its light file: `![Alt text](../../images/en/manual/<section>/<name>-desktop-light.png)`. The build adds its `-dark.png` twin and shows the one that matches the site theme.
+- The images are made outside this repo, from MONO's capture project. `pnpm manual:images` copies the finished ones from the captures folder (`MCV_DOCS_CAPTURES`) into `src/content/docs/images/en/manual/`.
+
 ## Brand assets {#brand-assets}
 
 `src/assets/brand/` holds the Common Voice artwork for pages and components:
