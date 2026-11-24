@@ -13,6 +13,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "lint:md": "markdownlint-cli2",
+    "manual:images": "node scripts/manual-images.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "node --test 'src/**/*.test.mjs'",
