@@ -46,6 +46,14 @@ test('a download in files/ gets its site URL', () => {
   )
 })
 
+test('keeps a query or fragment on a download link', () => {
+  const page = `${content}/en/datasets/index.md`
+  assert.equal(
+    fileHref('../../files/guide.pdf#page=2', page, content, base),
+    '/common-voice-docs/files/guide.pdf#page=2'
+  )
+})
+
 test('leaves links outside files/ alone', () => {
   for (const href of ['../../images/en/speak.png', 'https://example.org/files/a.tsv', '#files']) {
     assert.equal(fileHref(href, voice, content, base), null)

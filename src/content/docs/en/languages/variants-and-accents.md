@@ -33,7 +33,7 @@ Look up codes in the [ISO 639-3 code tables](https://iso639-3.sil.org/code_table
 | If speakers...                                                 | Use           | Example                                                                                            |
 | -------------------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------- |
 | use different words for the same thing, in well-defined places | a **variant** | _computadora_ in Mexico, _ordenador_ in Spain; Valencian _eixir_ and Catalan _sortir_, "to go out" |
-| write the same way but pronounce words differently             | an **accent** | _colour_ and _color_ are spelt differently but pronounced the same                                 |
+| write the same way but pronounce words differently             | an **accent** | _route_ said "root" in British English and "rowt" in Canadian English                              |
 | differ a lot in both spelling and pronunciation                | a **variant** | Catalan _huit_ in the west and _vuit_ in the east, "eight"                                         |
 | write the language in a different script                       | a **variant** | Serbian _река_ (Cyrillic) and _reka_ (Latin), "river"; also Konkani, Punjabi, Crimean Tatar        |
 | use the same script but different spelling systems             | a **variant** | Basaa "father": _ǹsaŋ_ in the new orthography, _nsañ_ in the older one                             |

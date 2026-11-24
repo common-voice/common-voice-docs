@@ -173,7 +173,7 @@ Some words might look the same in both languages but could be pronounced differe
 
 ### Tagging in a Single Token {#code-switching-single-token}
 
-A single space-separated token should contain more than one tagged span.
+A single space-separated token should **not** contain more than one tagged span.
 
 ### Tag Punctuation Based on Nearby Language {#code-switching-punctuation}
 

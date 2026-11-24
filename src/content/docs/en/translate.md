@@ -70,8 +70,8 @@ show the same thing. Keep what each example is there to show.
 
 ## When the English page changes {#when-english-changes}
 
-When the English page is edited after you translated it, your page shows a notice that the English version
-has changed. To update it, compare the English page with the commit in your `source_rev`, translate what
+The site does not warn you when the English page is edited after you translated it, so check from time to
+time. To update your page, compare the English page with the commit in your `source_rev`, translate what
 changed, and set `source_rev` to the new commit.
 
 ## Review {#review}

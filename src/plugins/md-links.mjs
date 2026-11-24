@@ -26,12 +26,15 @@ export function pageHref(href, sourceFile, contentDir, base) {
 /** The site URL for a relative link to a download in `files/`, or null when the link is not one. */
 export function fileHref(href, sourceFile, contentDir, base) {
   if (EXTERNAL.test(href)) return null
+  const suffixAt = href.search(/[?#]/)
+  const target = suffixAt === -1 ? href : href.slice(0, suffixAt)
+  const suffix = suffixAt === -1 ? '' : href.slice(suffixAt)
   const resolved = path
-    .relative(contentDir, path.resolve(path.dirname(sourceFile), href))
+    .relative(contentDir, path.resolve(path.dirname(sourceFile), target))
     .split(path.sep)
     .join('/')
   if (!resolved.startsWith('files/')) return null
-  return `${base.replace(/\/+$/, '')}/${resolved}`
+  return `${base.replace(/\/+$/, '')}/${resolved}${suffix}`
 }
 
 function walk(node, visit) {
@@ -58,7 +61,7 @@ export default function mdLinks({
       }
       const download = fileHref(href, file.path, contentDir, base)
       if (!download) return
-      const onDisk = path.join(publicDir, download.slice(base.replace(/\/+$/, '').length))
+      const onDisk = path.join(publicDir, download.slice(base.replace(/\/+$/, '').length).replace(/[?#].*$/, ''))
       if (!existsSync(onDisk)) throw new Error(`${file.path}: ${href} has no file at ${path.relative('.', onDisk)}`)
       node.properties.href = download
     })
