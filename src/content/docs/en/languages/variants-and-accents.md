@@ -44,12 +44,14 @@ Speakers who hear many varieties usually know the differences but use only their
 
 Common Voice writes variants as [BCP 47](https://www.rfc-editor.org/info/bcp47) tags, with up to four parts:
 
-| Part               | Form                                               | Standard  | Example                                |
-| ------------------ | -------------------------------------------------- | --------- | -------------------------------------- |
-| Language           | 2 or 3 letters, lowercase                          | ISO 639   | `ig` (Igbo), `vot` (Votic)             |
-| Script (optional)  | 4 letters, title case                              | ISO 15924 | `Latn`, `Cyrl`, `Deva`, `Beng`, `Arab` |
-| Region (optional)  | 2 letters, uppercase                               | ISO 3166  | `MX`, `ES`                             |
-| Variant (optional) | 5 to 8 letters, lowercase, chosen by the community | --        | `valencia`, `aranese`, `gascon`        |
+| Part               | Form                                | Standard  | Example                                |
+| ------------------ | ----------------------------------- | --------- | -------------------------------------- |
+| Language           | 2 or 3 letters, lowercase           | ISO 639   | `ig` (Igbo), `vot` (Votic)             |
+| Script (optional)  | 4 letters, title case               | ISO 15924 | `Latn`, `Cyrl`, `Deva`, `Beng`, `Arab` |
+| Region (optional)  | 2 letters, uppercase                | ISO 3166  | `MX`, `ES`                             |
+| Variant (optional) | 5 to 8 letters or digits, lowercase | BCP 47    | `valencia`, `aranese`, `gascon`        |
+
+BCP 47 also allows a 4-character variant that starts with a digit, such as `1901`. Variants such as `valencia` are registered in the IANA Language Subtag Registry. If your community's variant is not registered, Common Voice takes a new token in the same form, chosen by the community; it is not a registered BCP 47 tag.
 
 Leave out any part that adds nothing. English needs no `Latn`, because it is only written in Latin script. Valencian needs no `ES`, because it is only spoken in Spain. For a diaspora community, a region can matter.
 

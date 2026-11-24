@@ -20,7 +20,7 @@ If you could **hear them** and **understand them**, it’s usually **best to app
 
 If you think the pronunciation makes it **impossible to understand**, or there’s a **lot of background noise**, or there are **other people speaking too**, then you should reject the clip. See more information in the sections below.
 
-If a clip is rejected by 2 people, it is released in a different subset of the dataset.
+A rejected clip is not deleted: it is released in the invalidated part of the dataset.
 
 ## Varying Pronunciations {#varying-pronunciations}
 

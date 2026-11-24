@@ -57,7 +57,7 @@ Where the sentences will come from and who will read them: for example, texts a 
 
 The license says what others may do with the dataset once it is released.
 
-**A dataset for a language** is always released under [Creative Commons Zero 1.0](https://creativecommons.org/publicdomain/zero/1.0/) (CC0), like every Common Voice dataset. CC0 gives up every right to the recordings and sentences, so anyone can use them for any purpose without asking or naming the source. The form shows it; there is nothing to choose.
+**A dataset for a language** is always released under [Creative Commons Zero 1.0](https://creativecommons.org/publicdomain/zero/1.0/) (CC0). CC0 gives up every right to the recordings and sentences, so anyone can use them for any purpose without asking or naming the source. The form shows it; there is nothing to choose.
 
 **A domain-specific dataset** can carry another license, chosen on the form. The form shows each license by its full name and its code, the code being how [Mozilla Data Collective](https://datacollective.mozillafoundation.org/) lists it. CC0 is chosen first, and it is the one we recommend: data under CC0 can be combined with every other Common Voice dataset. Choose another only when the owner of the texts requires it.
 

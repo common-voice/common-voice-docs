@@ -7,9 +7,9 @@ const EXTERNAL = /^([a-z][a-z0-9+.-]*:|\/|#)/i
 /** The site URL for a relative `.md` link in a page, or null when the link is not a relative page link. */
 export function pageHref(href, sourceFile, contentDir, base) {
   if (EXTERNAL.test(href)) return null
-  const hashAt = href.indexOf('#')
-  const target = hashAt === -1 ? href : href.slice(0, hashAt)
-  const hash = hashAt === -1 ? '' : href.slice(hashAt)
+  const suffixAt = href.search(/[?#]/)
+  const target = suffixAt === -1 ? href : href.slice(0, suffixAt)
+  const suffix = suffixAt === -1 ? '' : href.slice(suffixAt)
   if (!target.endsWith('.md')) return null
   const resolved = path.relative(contentDir, path.resolve(path.dirname(sourceFile), target))
   if (resolved.startsWith('..')) return null
@@ -20,7 +20,7 @@ export function pageHref(href, sourceFile, contentDir, base) {
     .replace(/(^|\/)index$/, '')
     .toLowerCase()
   const root = base.replace(/\/+$/, '')
-  return `${root}/${slug ? `${slug}/` : ''}${hash}`
+  return `${root}/${slug ? `${slug}/` : ''}${suffix}`
 }
 
 /** The site URL for a relative link to a download in `files/`, or null when the link is not one. */

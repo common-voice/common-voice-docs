@@ -15,13 +15,13 @@ Every Scripted Speech and Spontaneous Speech dataset is downloaded from [Mozilla
 
 **You agree** to not attempt to determine the identity of speakers in the Common Voice dataset
 
-License: [CC-0](https://creativecommons.org/publicdomain/zero/1.0/)
+License: language datasets are [CC-0](https://creativecommons.org/publicdomain/zero/1.0/). A domain-specific dataset can carry another license, so check the license shown for the dataset you download.
 
 If you’re looking for tools to build ASR models, you can connect to other people in the community [on Discourse](https://discourse.mozilla.org/c/voice/239).
 
 ## What’s inside the Common Voice dataset? {#whats-inside}
 
-Each entry in the dataset consists of a unique MP3 and corresponding text file. Many of the recorded hours in the dataset also include demographic metadata like age, sex, and accent that can help train the accuracy of speech recognition engines.
+Each entry in the dataset consists of a unique MP3 and a row in a TSV file, which holds its text and the path of the MP3. Many of the recorded hours in the dataset also include demographic metadata like age, sex, and accent that can help train the accuracy of speech recognition engines.
 
 ### Dataset releases {#releases}
 
@@ -31,14 +31,14 @@ We’ve made some changes. Delta Segments just contain the most recent clips sin
 
 ### Clips in a release {#clips}
 
-| Part             | Holds                                                                       |
-| ---------------- | --------------------------------------------------------------------------- |
-| validated        | clips that at least two people accepted                                     |
-| invalidated      | clips that at least two people rejected                                     |
-| other            | clips that have not had enough votes yet                                    |
-| train, dev, test | the validated clips, split so that no speaker appears in more than one part |
+| Part             | Holds                                                                                                                            |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| validated        | clips with at least two votes, where more people accepted than rejected                                                          |
+| invalidated      | clips with at least two votes, where more people rejected than accepted                                                          |
+| other            | clips that do not have enough votes to decide yet                                                                                |
+| train, dev, test | subsets of the validated clips, split so that no speaker appears in more than one; together they are not all the validated clips |
 
-If a clip is rejected by 2 people, it is released in a different subset of the dataset.
+A rejected clip is not deleted: it is released in the invalidated part of the dataset.
 
 ## Get Started with Speech Recognition {#get-started}
 

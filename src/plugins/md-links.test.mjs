@@ -11,6 +11,13 @@ test('a sibling page in the same language', () => {
   assert.equal(pageHref('reporting.md', voice, content, base), '/common-voice-docs/tr/contribute/guidelines/reporting/')
 })
 
+test('keeps a query before the anchor', () => {
+  assert.equal(
+    pageHref('sentences.md?source=voice#public-domain', voice, content, base),
+    '/common-voice-docs/tr/contribute/guidelines/sentences/?source=voice#public-domain'
+  )
+})
+
 test('keeps the anchor', () => {
   assert.equal(
     pageHref('sentences.md#public-domain', voice, content, base),

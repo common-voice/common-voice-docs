@@ -29,9 +29,9 @@ flowchart TD
 
 **Listen**: Users validate the accuracy of donated clips, checking that the speaker read the sentence correctly.
 
-**Is the clip valid?** A voice clip is marked "valid" when a user gives it a Yes vote.
+**Is the clip valid?** A Yes vote means one person found the clip correct. A clip counts as validated when it has at least two votes and more people said Yes than No.
 
-**≥ 2 Yes votes**: To make it into the Common Voice dataset, a voice clip must be validated by two separate users.
+**≥ 2 votes**: A clip needs votes from at least two separate users to be validated. Clips that are not validated are released too, in separate parts of the dataset.
 
 ## How are project decisions made? {#governance}
 

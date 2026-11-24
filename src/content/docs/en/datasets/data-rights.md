@@ -12,9 +12,9 @@ description: What becomes public when you contribute, the CC0 license, and how t
 
 ## The CC0 license {#cc0}
 
-It is very important that all text sentences are [public domain](https://en.wikipedia.org/wiki/Public_domain) ([cc0](https://creativecommons.org/publicdomain/zero/1.0/)) as the Common Voice dataset is released under a cc0 license. Only ever upload a sentence if you are sure, and always include the relevant citation.
+It is very important that all text sentences are [public domain](https://en.wikipedia.org/wiki/Public_domain) ([cc0](https://creativecommons.org/publicdomain/zero/1.0/)) as Common Voice language datasets are released under a cc0 license. Only ever upload a sentence if you are sure, and always include the relevant citation.
 
-CC0 means the owner gives up every right to the work, so anyone can use it for any purpose without asking. Recordings and sentences in the dataset are released under CC0.
+CC0 means the owner gives up every right to the work, so anyone can use it for any purpose without asking. Recordings and sentences in a language dataset are released under CC0. A domain-specific dataset can carry another license, so check the license shown for the dataset you download.
 
 ## Giving text to the dataset: the CC0 waiver {#cc0-waiver}
 
