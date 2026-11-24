@@ -1,0 +1,30 @@
+/* Noto Sans for text and Noto Sans Mono for code, the faces the Common Voice web app uses. */
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../assets/fonts/NotoSans-variable-wght-sub.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../assets/fonts/NotoSans-Italic-variable-wght-sub.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans Mono';
+  src: url('../assets/fonts/NotoSansMono-variable-wght-sub.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --sl-font: 'Noto Sans', system-ui, sans-serif;
+  --sl-font-mono: 'Noto Sans Mono', ui-monospace, monospace;
+}

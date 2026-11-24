@@ -1,0 +1,58 @@
+/* Common Voice brand colours on Starlight's colour roles: the web app's gray and orange ramps, in dark and light. */
+
+:root {
+  --cv-gray-50: #f7f7f7;
+  --cv-gray-100: #dcdcdc;
+  --cv-gray-200: #b6b6b6;
+  --cv-gray-300: #9d9d9d;
+  --cv-gray-400: #878787;
+  --cv-gray-500: #707070;
+  --cv-gray-600: #5a5a5a;
+  --cv-gray-700: #434343;
+  --cv-gray-800: #2d2d2d;
+  --cv-gray-900: #161616;
+
+  --cv-orange-50: #ffceae;
+  --cv-orange-100: #ffb687;
+  --cv-orange-200: #ff9e5f;
+  --cv-orange-300: #f88539;
+  --cv-orange-400: #f06c13;
+  --cv-orange-800: #b92d05;
+  --cv-orange-900: #a02900;
+
+  --cv-dark-background: #0f1113;
+  --cv-dark-foreground: #f0f2f4;
+}
+
+/* Dark */
+:root {
+  --sl-color-accent-low: var(--cv-orange-900);
+  --sl-color-accent: var(--cv-orange-300);
+  --sl-color-accent-high: var(--cv-orange-50);
+
+  --sl-color-white: var(--cv-dark-foreground);
+  --sl-color-gray-1: var(--cv-gray-100);
+  --sl-color-gray-2: var(--cv-gray-200);
+  --sl-color-gray-3: var(--cv-gray-300);
+  --sl-color-gray-4: var(--cv-gray-600);
+  --sl-color-gray-5: var(--cv-gray-700);
+  --sl-color-gray-6: var(--cv-gray-800);
+  --sl-color-black: var(--cv-dark-background);
+}
+
+/* Light */
+:root[data-theme='light'] {
+  --sl-color-accent-low: var(--cv-orange-50);
+  --sl-color-accent: var(--cv-orange-800);
+  --sl-color-accent-high: var(--cv-orange-900);
+
+  --sl-color-white: var(--cv-gray-900);
+  --sl-color-gray-1: var(--cv-gray-800);
+  --sl-color-gray-2: var(--cv-gray-700);
+  --sl-color-gray-3: var(--cv-gray-600);
+  --sl-color-gray-4: var(--cv-gray-400);
+  --sl-color-gray-5: var(--cv-gray-200);
+  --sl-color-gray-6: var(--cv-gray-100);
+  --sl-color-gray-7: #ececec;
+  --sl-color-black: var(--cv-gray-50);
+}

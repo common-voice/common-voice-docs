@@ -1,0 +1,14 @@
+{
+  "config": {
+    "default": true,
+    // Long lines are fine: pages are written one paragraph per line.
+    "MD013": false,
+    // The page title comes from the front matter, not a first-line heading.
+    "MD041": false,
+    "MD024": { "siblings_only": true },
+    // The guidelines underline the part of an example that matters; Markdown has no underline.
+    "MD033": { "allowed_elements": ["u"] },
+  },
+  "globs": ["**/*.md"],
+  "ignores": ["node_modules/**", "dist/**", ".astro/**"],
+}
