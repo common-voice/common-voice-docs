@@ -5,6 +5,7 @@ import { defineConfig } from 'astro/config'
 import mermaid from 'astro-mermaid'
 import headingId from 'remark-heading-id'
 import linksValidator from 'starlight-links-validator'
+import manualImages from './src/plugins/manual-images.mjs'
 import mdLinks from './src/plugins/md-links.mjs'
 
 const site = 'https://common-voice.github.io'
@@ -17,7 +18,7 @@ export default defineConfig({
   trailingSlash: 'always',
   redirects: { '/': `${base}/en/` },
   markdown: {
-    processor: unified({ remarkPlugins: [headingId], rehypePlugins: [[mdLinks, { base }]] }),
+    processor: unified({ remarkPlugins: [headingId, manualImages], rehypePlugins: [[mdLinks, { base }]] }),
   },
   integrations: [
     mermaid({ autoTheme: true }),
@@ -33,6 +34,44 @@ export default defineConfig({
       editLink: { baseUrl: `${repo}/edit/main/` },
       sidebar: [
         { label: 'Home', slug: '' },
+        {
+          label: 'User manual',
+          items: [
+            'manual',
+            'manual/common-parts',
+            {
+              label: 'Scripted Speech',
+              items: [
+                'manual/scripted-speech/speak',
+                'manual/scripted-speech/listen',
+                'manual/scripted-speech/write',
+                'manual/scripted-speech/review',
+              ],
+            },
+            {
+              label: 'Spontaneous Speech',
+              items: [
+                'manual/spontaneous-speech/answer',
+                'manual/spontaneous-speech/transcribe',
+                'manual/spontaneous-speech/question',
+                'manual/spontaneous-speech/validate',
+              ],
+            },
+            {
+              label: 'Your profile',
+              items: [
+                'manual/profile/languages',
+                'manual/profile/dashboard',
+                'manual/profile/download',
+                'manual/profile/delete',
+              ],
+            },
+            {
+              label: 'Forms',
+              items: ['manual/forms/contact', 'manual/forms/dataset-request', 'manual/forms/apply'],
+            },
+          ],
+        },
         { label: 'About', items: ['about', 'about/partnerships'] },
         {
           label: 'Contribute',

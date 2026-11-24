@@ -44,7 +44,7 @@ At present, most voice datasets are owned by companies, which stifles innovation
 - [Transcribe answers](contribute/guidelines/spontaneous-speech.md#transcribe-the-audio)
 - [Review transcriptions](contribute/guidelines/spontaneous-speech.md#review-the-transcription)
 
-The Spontaneous Speech, Code Switching and Asynchronous Conversations activities are opening soon.
+The Code Switching and Asynchronous Conversations activities are opening soon.
 
 ## Publicly accessible open speech datasets in 330+ languages {#datasets}
 

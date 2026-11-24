@@ -56,3 +56,9 @@
   --sl-color-gray-7: #ececec;
   --sl-color-black: var(--cv-gray-50);
 }
+
+/* Manual screenshots: each is written once as its light file, and the plugin adds the dark twin; show the one that matches. */
+:root[data-theme='light'] .manual-dark,
+:root:not([data-theme='light']) .manual-light {
+  display: none;
+}

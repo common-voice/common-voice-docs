@@ -3,7 +3,7 @@ title: Spontaneous Speech
 description: Understand how to contribute and validate on the Common Voice dataset
 ---
 
-The Spontaneous Speech activities are opening soon. These guidelines already apply.
+These guidelines apply to every Spontaneous Speech activity.
 
 ## Answer Questions {#answer-questions}
 

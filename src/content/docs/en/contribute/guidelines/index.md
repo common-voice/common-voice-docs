@@ -5,7 +5,7 @@ description: Understand how to contribute and validate on the Common Voice datas
 
 Understand how to contribute and validate on the Common Voice dataset
 
-The Spontaneous Speech, Code Switching and Asynchronous Conversations activities are opening soon. Their guidelines already apply.
+The Code Switching and Asynchronous Conversations activities are opening soon. Their guidelines already apply.
 
 ## Scripted Speech {#scripted-speech}
 

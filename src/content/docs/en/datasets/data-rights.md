@@ -27,6 +27,6 @@ If you own a text, or you know who does, it can be dedicated to the public domai
 
 ## Your account and your recordings {#your-account}
 
-Downloading your data, changing or clearing your demographic details, and deleting your account are coming to your profile: see [Your account](../contribute/account.md#your-data). Releases that are already published stay as they were.
+You can [download your data](../manual/profile/download.md) and [delete your account](../manual/profile/delete.md) from your profile. Changing or clearing your demographic details is coming: see [Your account](../contribute/account.md#your-data). Releases that are already published stay as they were.
 
 We promise to handle your information with care. Read more in our [Privacy Notice](https://commonvoice.mozilla.org).

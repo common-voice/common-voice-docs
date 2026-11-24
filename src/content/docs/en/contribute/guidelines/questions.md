@@ -5,7 +5,7 @@ description: Understand how to contribute and validate on the Common Voice datas
 
 ## Adding Questions {#collecting-questions}
 
-Each dataset's moderators add and review its questions. This activity is opening soon.
+Each dataset's moderators add and review its questions.
 
 ### What makes a good question? {#good-question}
 
