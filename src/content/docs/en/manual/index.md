@@ -5,6 +5,8 @@ description: The first steps to take on Common Voice, in order
 
 New to Common Voice? Follow these five steps. Each one takes a few clicks.
 
+You can start without an account. As a guest, in a Scripted Speech dataset released under CC0, you can write one sentence at a time and record up to 100 sentences. Listen, Review, adding many sentences at once, and the other sections need an account.
+
 ## Step 1: Choose the site language {#site-language}
 
 - Open the language button at the top right.
@@ -32,11 +34,13 @@ On a phone, ① opens the menu and ② is a section card.
 - **Code Switching**: speak across two languages in one turn.
 - **Asynchronous Conversations**: reply to others in moderated, topic-bound rooms.
 
+Scripted Speech is open now. The other sections are opening soon, so their steps may not be available yet.
+
 ## Step 4: Pick a dataset {#dataset}
 
 - ② **Select a dataset** to switch the steps on. A dataset is one language.
 - ① The steps are the ways you can help.
-- ③ Your language is not there? Use **Request a dataset**, for a general or a domain-specific dataset.
+- ③ Your language is not there? Use **Request a dataset** on the Scripted Speech page, for a general or a domain-specific dataset. Requests are open for Scripted Speech only.
 
 ![A section page, with the steps ①, the dataset picker ② and the request buttons ③](../../images/en/manual/start-here/section-overview-desktop-light.png)
 

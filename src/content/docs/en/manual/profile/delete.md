@@ -9,7 +9,7 @@ You can delete your profile at any time.
 
 - ① Choose what happens to your recordings: **Keep** or **Remove**.
 - **Keep**: your recordings stay in the dataset, without your name.
-- **Remove**: we also delete your recordings.
+- **Remove**: we also delete your recordings. Dataset releases that are already published stay as they were, so your recordings remain in them.
 - After you delete your profile, you can no longer ask us to remove your recordings later.
 - ② Type the number shown on the page.
 - ③ Press **Delete Profile**.

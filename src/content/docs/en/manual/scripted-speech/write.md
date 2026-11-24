@@ -7,7 +7,7 @@ Add sentences that people can record. The parts every contribution page shares a
 
 ## Add sentences {#add}
 
-- ① Type or paste your sentences, one on each line.
+- ① Type or paste your sentences, one on each line. As a guest you can add one sentence at a time; adding many at once needs an account.
 - ② Choose up to three domains, if they fit. This is optional.
 - ③ Say where the sentences come from.
 - ④ Tick **Self Citation** if you wrote them yourself.

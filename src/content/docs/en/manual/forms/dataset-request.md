@@ -16,5 +16,5 @@ Your language is not in a section yet? Ask for it. A dataset is one language in 
 
 ## Where to find it {#where}
 
-- Open a section page, then use **Request a dataset**: [Start here, step 4](../index.md#dataset).
+- Open the Scripted Speech page, then use **Request a dataset**. Requests are open for Scripted Speech only: [Start here, step 4](../index.md#dataset).
 - More about requests: [Request a dataset](../../languages/dataset-request.md).
