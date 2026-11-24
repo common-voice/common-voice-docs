@@ -1,15 +1,7 @@
 ---
 title: Your account
 description: Your profile, your progress and your data
-sidebar:
-  badge:
-    text: Soon
-    variant: note
 ---
-
-:::note[Coming soon]
-These parts of Common Voice are opening soon. This page is written when they do.
-:::
 
 ## Your profile {#profile}
 
@@ -17,11 +9,11 @@ Coming soon.
 
 ## Your languages {#languages}
 
-Coming soon.
+See [your languages page](../manual/profile/languages.md).
 
 ## Your dashboard {#dashboard}
 
-Coming soon.
+See [the dashboard](../manual/profile/dashboard.md).
 
 ## Top Contributors lists {#leaderboards}
 
@@ -31,7 +23,7 @@ Coming soon.
 
 ### Download your data {#download-your-data}
 
-Coming soon.
+See [Download my data](../manual/profile/download.md).
 
 ### Your demographic details {#demographics}
 
@@ -39,4 +31,4 @@ Coming soon.
 
 ### Delete your account {#delete-your-account}
 
-Coming soon.
+See [Delete my profile](../manual/profile/delete.md).

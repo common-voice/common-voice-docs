@@ -34,7 +34,7 @@ On a phone, ① opens the menu and ② is a section card.
 - **Code Switching**: speak across two languages in one turn.
 - **Asynchronous Conversations**: reply to others in moderated, topic-bound rooms.
 
-Scripted Speech is open now. The other sections are opening soon, so their steps may not be available yet.
+Scripted Speech and Spontaneous Speech are open now. Code Switching and Asynchronous Conversations are opening soon.
 
 ## Step 4: Pick a dataset {#dataset}
 

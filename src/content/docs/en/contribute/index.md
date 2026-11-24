@@ -38,7 +38,7 @@ Reply to others in moderated, topic-bound rooms to build asynchronous conversati
 
 - [Asynchronous Conversations](guidelines/conversations.md)
 
-The Spontaneous Speech, Code Switching and Asynchronous Conversations activities are opening soon.
+The Code Switching and Asynchronous Conversations activities are opening soon.
 
 ## Contribution Guidelines {#guidelines}
 
